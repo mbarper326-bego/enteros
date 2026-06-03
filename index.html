@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Test Números Enteros - 1º ESO</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f7ff;
+            margin: 0;
+            padding: 20px;
+            color: #1e2a3a;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 28px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: 20px 25px 40px 25px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: #0b3b5f;
+            border-left: 6px solid #ff8c42;
+            padding-left: 18px;
+            margin-top: 0;
+            margin-bottom: 8px;
+        }
+
+        .subtitulo {
+            color: #2c5a7a;
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 12px;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 20px;
+            margin-bottom: 28px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2edf7;
+        }
+
+        .card-header {
+            background-color: #f8fafc;
+            padding: 12px 20px;
+            border-bottom: 2px solid #dceaf5;
+            border-radius: 20px 20px 0 0;
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .numero-pagina {
+            background-color: #ff8c42;
+            color: white;
+            font-weight: bold;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 0.75rem;
+        }
+
+        .enunciado {
+            font-weight: 600;
+            font-size: 1rem;
+            color: #0c4a6e;
+        }
+
+        .card-body {
+            padding: 16px 20px;
+        }
+
+        .pregunta {
+            background: #fefaf5;
+            padding: 14px 18px;
+            border-radius: 18px;
+            margin-bottom: 20px;
+            border-left: 4px solid #ffb347;
+        }
+
+        .pregunta-texto {
+            margin-bottom: 12px;
+            font-weight: 600;
+            line-height: 1.4;
+            font-size: 0.95rem;
+        }
+
+        .opciones {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin: 10px 0 8px 0;
+        }
+
+        .opcion {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: white;
+            padding: 6px 14px;
+            border-radius: 60px;
+            border: 1px solid #e2e8f0;
+            transition: 0.1s;
+            cursor: pointer;
+        }
+
+        .opcion:hover {
+            background-color: #fff5e8;
+        }
+
+        input[type="radio"] {
+            accent-color: #ff8c42;
+            width: 18px;
+            height: 18px;
+            margin: 0;
+            cursor: pointer;
+        }
+
+        label {
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: #2d3e50;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        button.comprobar {
+            background-color: #2c5a7a;
+            color: white;
+            border: none;
+            padding: 6px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin-top: 10px;
+        }
+
+        button.comprobar:hover {
+            background-color: #ff8c42;
+        }
+
+        .feedback {
+            margin-top: 12px;
+            padding: 8px 12px;
+            border-radius: 16px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .correcto {
+            background-color: #e0f7e8;
+            border-left: 4px solid #2e7d64;
+            color: #1e6b3e;
+        }
+
+        .incorrecto {
+            background-color: #ffe6e5;
+            border-left: 4px solid #d1453b;
+            color: #c0392b;
+        }
+
+        .intentos-msg {
+            font-size: 0.7rem;
+            color: #5c7c96;
+            margin-top: 5px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 0.75rem;
+            color: #5c7c96;
+            border-top: 1px solid #e2edf7;
+            padding-top: 20px;
+        }
+
+        @media (max-width: 650px) {
+            .container {
+                padding: 15px;
+            }
+            .card-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>🔢 Números Enteros | Evaluación interactiva</h1>
+    <div class="subtitulo">Matemáticas 1.º ESO · Páginas 191, 192, 195, 196</div>
+    <p style="background:#eef2ff; padding:10px 16px; border-radius:18px; margin-bottom:20px; font-size:0.9rem;">
+        ✅ Elige una opción y pulsa "Comprobar". El sistema te dirá si es correcto o incorrecto. Puedes intentarlo varias veces.
+    </p>
+
+    <div id="preguntasContainer"></div>
+
+    <footer>
+        📘 Preguntas basadas en el libro "Matemáticas 1.º ESO Recursos Didácticos" (Números Enteros).<br>
+        🔁 Responde todas las preguntas. ¡Ánimo!
+    </footer>
+</div>
+
+<script>
+    // ========== DEFINICIÓN DE PREGUNTAS (orden de la fotocopia, SIN pregunta 2) ==========
+    // Pregunta 1: 4 apartados (a, b, c, d)
+    // Pregunta 3: 4 apartados (a, b, c, d)
+    // Pregunta 4: 4 apartados (a, b, c, d)
+    // Pregunta 5: 6 apartados (a, b, c, d, e, f)
+    // Pregunta 6: 4 apartados (a, b, c, d)
+    // Pregunta 7: 3 apartados (a, b, c)
+    // Pregunta 8: 2 apartados (a, b)
+    // Pregunta 9: 6 apartados (a, b, c, d, e, f)
+    // Pregunta 10: 4 apartados (a, b, c, d)
+    // Pregunta 11: 1 apartado (problema Everest)
+    
+    const preguntasData = [
+        // ========== PREGUNTA 1 (4 apartados) ==========
+        { texto: "1a) Escribe con el signo adecuado: 'La profundidad del Mar Muerto es 790 m por debajo del nivel del mar'.", 
+          opciones: ["a) +790", "b) -790", "c) 790", "d) |790|"], correcta: "b" },
+        { texto: "1b) Escribe con el signo adecuado: 'La temperatura de ebullición del agua es 100°C sobre cero'.", 
+          opciones: ["a) -100", "b) 100", "c) +100", "d) |100|"], correcta: "c" },
+        { texto: "1c) Escribe con el signo adecuado: 'La temperatura de fusión del alcohol es 90°C bajo cero'.", 
+          opciones: ["a) +90", "b) 90", "c) -90", "d) |90|"], correcta: "c" },
+        { texto: "1d) Escribe con el signo adecuado: 'La altura del Everest es de 8848 metros sobre el nivel del mar'.", 
+          opciones: ["a) -8848", "b) 8848", "c) +8848", "d) |8848|"], correcta: "c" },
+        
+        // ========== PREGUNTA 3 (4 apartados) ==========
+        { texto: "3a) Calcula el valor absoluto: | -3 |", 
+          opciones: ["a) -3", "b) 3", "c) 0", "d) ±3"], correcta: "b" },
+        { texto: "3b) Calcula el valor absoluto: | -2 |", 
+          opciones: ["a) 2", "b) -2", "c) 0", "d) ±2"], correcta: "a" },
+        { texto: "3c) Calcula el valor absoluto: | +5 |", 
+          opciones: ["a) -5", "b) 0", "c) 5", "d) ±5"], correcta: "c" },
+        { texto: "3d) Calcula el valor absoluto: | 0 |", 
+          opciones: ["a) 0", "b) 1", "c) No existe", "d) ±0"], correcta: "a" },
+        
+        // ========== PREGUNTA 4 (4 apartados) ==========
+        { texto: "4a) Escribe el símbolo < o > según corresponda: -5 ___ +4", 
+          opciones: ["a) >", "b) <", "c) =", "d) ≥"], correcta: "b" },
+        { texto: "4b) Escribe el símbolo < o > según corresponda: +3 ___ +5", 
+          opciones: ["a) >", "b) <", "c) =", "d) ≤"], correcta: "b" },
+        { texto: "4c) Escribe el símbolo < o > según corresponda: +3 ___ -4", 
+          opciones: ["a) >", "b) <", "c) =", "d) ≤"], correcta: "a" },
+        { texto: "4d) Escribe el símbolo < o > según corresponda: -5 ___ -4", 
+          opciones: ["a) >", "b) <", "c) =", "d) ≥"], correcta: "b" },
+        
+        // ========== PREGUNTA 5 (6 apartados) ==========
+        { texto: "5a) Realiza la suma: (+3) + (+6)", 
+          opciones: ["a) -9", "b) +3", "c) +9", "d) -3"], correcta: "c" },
+        { texto: "5b) Realiza la suma: (+2) + (-4)", 
+          opciones: ["a) +6", "b) -2", "c) +2", "d) -6"], correcta: "b" },
+        { texto: "5c) Realiza la suma: (-3) + (-5)", 
+          opciones: ["a) +8", "b) -2", "c) +2", "d) -8"], correcta: "d" },
+        { texto: "5d) Realiza la suma: (-3) + (+5) + (-2)", 
+          opciones: ["a) +4", "b) -4", "c) 0", "d) +6"], correcta: "c" },
+        { texto: "5e) Realiza la suma: (-5) + (-4) + (-6)", 
+          opciones: ["a) -15", "b) +15", "c) -5", "d) +5"], correcta: "a" },
+        { texto: "5f) Realiza la suma: (+4) + (-2) + (+4)", 
+          opciones: ["a) +2", "b) -2", "c) +6", "d) -6"], correcta: "c" },
+        
+        // ========== PREGUNTA 6 (4 apartados) ==========
+        { texto: "6a) Realiza la resta: (+3) - (+5)", 
+          opciones: ["a) +8", "b) -2", "c) +2", "d) -8"], correcta: "b" },
+        { texto: "6b) Realiza la resta: (+2) - (-7)", 
+          opciones: ["a) -5", "b) +9", "c) +5", "d) -9"], correcta: "b" },
+        { texto: "6c) Realiza la resta: (-3) - (+4)", 
+          opciones: ["a) +7", "b) -1", "c) -7", "d) +1"], correcta: "c" },
+        { texto: "6d) Realiza la resta: (-2) - (-6)", 
+          opciones: ["a) +4", "b) -8", "c) -4", "d) +8"], correcta: "a" },
+        
+        // ========== PREGUNTA 7 (3 apartados) ==========
+        { texto: "7a) Calcula: (-2) - (-4) + (-5) - (-1) - (+2)", 
+          opciones: ["a) -4", "b) +4", "c) 0", "d) -8"], correcta: "a" },
+        { texto: "7b) Calcula: (+2) - (-3) - (-5) + (+2) + (-3)", 
+          opciones: ["a) -9", "b) +9", "c) +5", "d) -5"], correcta: "b" },
+        { texto: "7c) Calcula: (-5) + (+5) + (-2) - (-4) + (-5)", 
+          opciones: ["a) -3", "b) +3", "c) -7", "d) +7"], correcta: "a" },
+        
+        // ========== PREGUNTA 8 (2 apartados) ==========
+        { texto: "8a) Calcula: (-2 + 4) - (-4 - 3 + 5) + (4 - 5)", 
+          opciones: ["a) -3", "b) +3", "c) +1", "d) -1"], correcta: "b" },
+        { texto: "8b) Calcula: (2 - 3) - (-5 + 2) + (1 - 3 - 4)", 
+          opciones: ["a) +4", "b) -4", "c) +2", "d) -2"], correcta: "b" },
+        
+        // ========== PREGUNTA 9 (6 apartados) ==========
+        { texto: "9a) Calcula el producto: (-3) · (-2)", 
+          opciones: ["a) -6", "b) +6", "c) -5", "d) +5"], correcta: "b" },
+        { texto: "9b) Calcula el producto: (+3) · (+4) · (-2)", 
+          opciones: ["a) +24", "b) -24", "c) +14", "d) -14"], correcta: "b" },
+        { texto: "9c) Calcula el producto: (+2) · (-3) · (-4)", 
+          opciones: ["a) -24", "b) +24", "c) -14", "d) +14"], correcta: "b" },
+        { texto: "9d) Calcula el producto: (-2) · (-2) · (-2) · (-2)", 
+          opciones: ["a) -16", "b) +8", "c) +16", "d) -8"], correcta: "c" },
+        { texto: "9e) Calcula el producto: (-1) · (-1)", 
+          opciones: ["a) -1", "b) +1", "c) 0", "d) +2"], correcta: "b" },
+        { texto: "9f) Calcula el producto: (+5) · (+20)", 
+          opciones: ["a) -100", "b) +25", "c) +100", "d) -25"], correcta: "c" },
+        
+        // ========== PREGUNTA 10 (4 apartados) ==========
+        { texto: "10a) Calcula la división: (-3) : (+3)", 
+          opciones: ["a) +1", "b) -1", "c) 0", "d) +3"], correcta: "b" },
+        { texto: "10b) Calcula la división: (+12) : (-4)", 
+          opciones: ["a) +3", "b) -3", "c) +4", "d) -4"], correcta: "b" },
+        { texto: "10c) Calcula la división: (-24) : (-8)", 
+          opciones: ["a) -3", "b) +4", "c) +3", "d) -4"], correcta: "c" },
+        { texto: "10d) Calcula la división: (+21) : (+7)", 
+          opciones: ["a) -3", "b) +4", "c) -4", "d) +3"], correcta: "d" },
+        
+        // ========== PREGUNTA 11 (problema Everest) ==========
+        { texto: "11) El punto más alto de la Tierra es el Everest (8848 m sobre el nivel del mar) y el punto más bajo es la Fosa de las Marianas (-11510 m). ¿Cuál es la diferencia de nivel entre estos dos puntos?", 
+          opciones: ["a) 2662 m", "b) -2662 m", "c) 20358 m", "d) -20358 m"], correcta: "c" }
+    ];
+
+    // Estado: guardamos para cada pregunta si está acertada y sus intentos
+    let estado = {
+        aciertos: new Array(preguntasData.length).fill(false),
+        intentos: new Array(preguntasData.length).fill(0)
+    };
+
+    // Cargar desde localStorage
+    function cargarEstado() {
+        const guardado = localStorage.getItem("testNumerosEnterosCompleto");
+        if (guardado) {
+            try {
+                const data = JSON.parse(guardado);
+                if (data.aciertos) estado.aciertos = data.aciertos;
+                if (data.intentos) estado.intentos = data.intentos;
+            } catch(e) {}
+        }
+    }
+
+    function guardarEstado() {
+        localStorage.setItem("testNumerosEnterosCompleto", JSON.stringify({
+            aciertos: estado.aciertos,
+            intentos: estado.intentos
+        }));
+    }
+
+    // Comprobar respuesta
+    function comprobarPregunta(idx) {
+        if(estado.aciertos[idx]) {
+            const feedbackDiv = document.getElementById(`fb_${idx}`);
+            feedbackDiv.innerHTML = "ℹ️ Esta pregunta ya la has acertado anteriormente.";
+            feedbackDiv.className = "feedback correcto";
+            return;
+        }
+        const pregunta = preguntasData[idx];
+        const radios = document.getElementsByName(`q_${idx}`);
+        let seleccionado = null;
+        for(let i=0; i<radios.length; i++) {
+            if(radios[i].checked) {
+                seleccionado = radios[i].value;
+                break;
+            }
+        }
+        const feedbackDiv = document.getElementById(`fb_${idx}`);
+        if(!seleccionado) {
+            feedbackDiv.innerHTML = "⚠️ Selecciona una opción antes de comprobar.";
+            feedbackDiv.className = "feedback incorrecto";
+            return;
+        }
+
+        // Incrementar intentos
+        estado.intentos[idx] = (estado.intentos[idx] || 0) + 1;
+
+        if(seleccionado === pregunta.correcta) {
+            estado.aciertos[idx] = true;
+            feedbackDiv.innerHTML = `✅ ¡Correcto! (Acertado en ${estado.intentos[idx]} intento(s))`;
+            feedbackDiv.className = "feedback correcto";
+            // Deshabilitar radios y botón
+            for(let i=0; i<radios.length; i++) {
+                radios[i].disabled = true;
+            }
+            const btn = document.getElementById(`btn_${idx}`);
+            if(btn) btn.disabled = true;
+        } else {
+            feedbackDiv.innerHTML = `❌ Incorrecto. Llevas ${estado.intentos[idx]} intento(s). ¡Sigue intentándolo!`;
+            feedbackDiv.className = "feedback incorrecto";
+        }
+        guardarEstado();
+        const intentosSpan = document.getElementById(`int_${idx}`);
+        if(intentosSpan) intentosSpan.textContent = `Intentos: ${estado.intentos[idx]}`;
+    }
+
+    // Renderizar todas las preguntas
+    function renderizarPreguntas() {
+        const container = document.getElementById("preguntasContainer");
+        container.innerHTML = "";
+        
+        // Grupos de preguntas por número original
+        const grupos = [
+            { titulo: "📄 Pregunta 1", inicio: 0, fin: 4 },
+            { titulo: "📄 Pregunta 3", inicio: 4, fin: 8 },
+            { titulo: "📄 Pregunta 4", inicio: 8, fin: 12 },
+            { titulo: "📄 Pregunta 5", inicio: 12, fin: 18 },
+            { titulo: "📄 Pregunta 6", inicio: 18, fin: 22 },
+            { titulo: "📄 Pregunta 7", inicio: 22, fin: 25 },
+            { titulo: "📄 Pregunta 8", inicio: 25, fin: 27 },
+            { titulo: "📄 Pregunta 9", inicio: 27, fin: 33 },
+            { titulo: "📄 Pregunta 10", inicio: 33, fin: 37 },
+            { titulo: "📄 Pregunta 11", inicio: 37, fin: 38 }
+        ];
+        
+        for(let grupo of grupos) {
+            const card = document.createElement("div");
+            card.className = "card";
+            
+            const cardHeader = document.createElement("div");
+            cardHeader.className = "card-header";
+            cardHeader.innerHTML = `<span class="numero-pagina">${grupo.titulo}</span><span class="enunciado">Números Enteros</span>`;
+            card.appendChild(cardHeader);
+            
+            const cardBody = document.createElement("div");
+            cardBody.className = "card-body";
+            
+            for(let i = grupo.inicio; i < grupo.fin; i++) {
+                const p = preguntasData[i];
+                const divPregunta = document.createElement("div");
+                divPregunta.className = "pregunta";
+                divPregunta.id = `preg_${i}`;
+                
+                const textoDiv = document.createElement("div");
+                textoDiv.className = "pregunta-texto";
+                textoDiv.innerHTML = p.texto;
+                divPregunta.appendChild(textoDiv);
+                
+                const opcionesDiv = document.createElement("div");
+                opcionesDiv.className = "opciones";
+                for(let optIdx=0; optIdx<p.opciones.length; optIdx++) {
+                    const optVal = String.fromCharCode(97+optIdx);
+                    const opcionTexto = p.opciones[optIdx];
+                    const opcionDiv = document.createElement("div");
+                    opcionDiv.className = "opcion";
+                    const radio = document.createElement("input");
+                    radio.type = "radio";
+                    radio.name = `q_${i}`;
+                    radio.value = optVal;
+                    radio.id = `q_${i}_${optVal}`;
+                    if(estado.aciertos[i]) radio.disabled = true;
+                    const label = document.createElement("label");
+                    label.htmlFor = `q_${i}_${optVal}`;
+                    label.innerText = opcionTexto;
+                    opcionDiv.appendChild(radio);
+                    opcionDiv.appendChild(label);
+                    opcionesDiv.appendChild(opcionDiv);
+                }
+                divPregunta.appendChild(opcionesDiv);
+                
+                const btn = document.createElement("button");
+                btn.textContent = "Comprobar";
+                btn.className = "comprobar";
+                btn.id = `btn_${i}`;
+                if(estado.aciertos[i]) btn.disabled = true;
+                btn.onclick = (function(idx) { return function() { comprobarPregunta(idx); }; })(i);
+                divPregunta.appendChild(btn);
+                
+                const feedbackDiv = document.createElement("div");
+                feedbackDiv.id = `fb_${i}`;
+                feedbackDiv.className = "feedback";
+                divPregunta.appendChild(feedbackDiv);
+                
+                const intentosSpan = document.createElement("div");
+                intentosSpan.className = "intentos-msg";
+                intentosSpan.id = `int_${i}`;
+                intentosSpan.textContent = `Intentos: ${estado.intentos[i] || 0}`;
+                divPregunta.appendChild(intentosSpan);
+                
+                cardBody.appendChild(divPregunta);
+                
+                if(estado.aciertos[i]) {
+                    feedbackDiv.innerHTML = `✅ ¡Correcto! (Acertado en ${estado.intentos[i]} intento(s))`;
+                    feedbackDiv.className = "feedback correcto";
+                }
+            }
+            card.appendChild(cardBody);
+            container.appendChild(card);
+        }
+    }
+
+    // Inicializar
+    cargarEstado();
+    renderizarPreguntas();
+</script>
+</body>
+</html>
